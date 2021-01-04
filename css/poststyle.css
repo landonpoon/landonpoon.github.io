@@ -1,0 +1,37 @@
+.breadcrumb, .post p, h1, h5, h6, h3, h2, .post, img, ul, ol {
+  padding-left: 23%;
+  padding-right: 23%;
+}
+
+.post h2 {
+  text-align: center;
+}
+
+.post img {
+  width: 100%;
+}
+
+.caption {
+  text-align: center;
+}
+
+.post ul {
+  margin-left: 30px;
+}
+
+img {
+  padding: 15px;
+}
+
+
+@media screen and (max-width: 992px) {
+  .breadcrumb, .post p, h1, h5, h6, h3, h2, .post, img, ul, ol {
+    padding-left: 5%;
+    padding-right: 5%;
+  }
+
+}
+
+h1 {
+  font-size: 50px;
+}
