@@ -1,0 +1,225 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/poststyle.css">
+    <link rel="shortcut icon" type="image/jpg" href="../images/favicon.png"/>
+    <title>Landon Poon</title>
+  </head>
+  <body>
+    <nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="http://landonpoon.me">Landon Poon</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav">
+            <a class="nav-link" aria-current="page" href="http://landonpoon.me">Home</a>
+            <a class="nav-link" href="../resume.pdf">Resume</a>
+            <a class="nav-link active" aria-current="page" href="../projects.html">Projects</a>
+            <a class="nav-link" href="../writing.html">Writing</a>
+            <a class="nav-link" href="../contact.html">Contact</a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+
+    <div class="container p-5 mt-4 post">
+      <figure class="text-center">
+        <h1>UFC Elo</h1>
+        <h5><em>A simple Elo system that takes in past UFC data and gives rankings and odds.</em></h5>
+        <h5 id="ViewOnGithub"><a href="https://github.com/landonpoon/ufc-elo">View on Github</a></h5>
+        <h6>Published: January 8, 2021</h6>
+      </figure>
+      <h2>Overview</h2>
+      <p>My program takes in past UFC data and uses an Elo system to assign point values to the various fighters. It takes into account win-loss record, past record strength, and age to determine win probabilities.</p>
+      <h2>Why Elo?</h2>
+      <p>Here's a good explaination of how the Elo system works. I won't bother explaining it here because this video does a really good job:</p>
+
+      <div class="embed-responsive embed-responsive-16by9">
+        <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/AsYfbmp0To0" allowfullscreen></iframe>
+      </div>
+
+      <p>Basically here are the reasons that an Elo system is good for measuring UFC fighters:</p>
+
+      <ul>
+        <li>UFC fighters have a certain skill level, but seem to perform differently on different days.</li>
+        <li>There are no points in UFC. Therefore, win-lose becomes the most pure way to measure the performance of fighters, as it's hard to determine whether a knockout is more indicative of a good fighter over a submission.</li>
+      </ul>
+
+      <h2>How It Works</h2>
+      <p>The program takes in data like this:</p>
+
+      <div class="post">
+        <table class="table table-striped table-sm table-responsive">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">date</th>
+              <th scope="col">weight_class</th>
+              <th scope="col">R_fighter</th>
+              <th scope="col">B_fighter</th>
+              <th scope="col">Winner</th>
+              <th scope="col">B_age</th>
+              <th scope="col">R_age</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>6/8/19</td>
+              <td>Women's Strawweight</td>
+              <td>Yan Xiaonan</td>
+              <td>Angela Hill</td>
+              <td>Red</td>
+              <td>34</td>
+              <td>29</td>
+            </tr>
+
+            <tr>
+              <th scope="row">2</th>
+              <td>6/8/19</td>
+              <td>Middleweight</td>
+              <td>Bevon Lewis</td>
+              <td>Darren Stewart</td>
+              <td>Blue</td>
+              <td>28</td>
+              <td>28</td>
+            </tr>
+
+            <tr>
+              <th scope="row">3</th>
+              <td>6/8/19</td>
+              <td>Bantamweight</td>
+              <td>Eddie Wineland</td>
+              <td>Grigorii Popov</td>
+              <td>Red</td>
+              <td>35</td>
+              <td>34</td>
+            </tr>
+
+            <tr>
+              <th scope="row">4</th>
+              <td>6/8/19</td>
+              <td>Women's Flyweight</td>
+              <td>Katlyn Chookagian</td>
+              <td>Joanne Calderwood</td>
+              <td>Red</td>
+              <td>33</td>
+              <td>30</td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+      <p>Then what it does is for each row, is either creates a new fighter profile or adds to an additional one. New fighters are assigned a score of 1000. Then, it takes the initial Elo scores for each fighter and the outcome to determine the resulting scores. The k value is 32, which controls how sensitive the model is. I chose 32 because it's suppossed to be standard.</p>
+
+      <p>The model does this for each row in the .csv, starting with the oldest fights first, and then outputs a .csv that has each fighter name and their score, that looks like this:</p>
+
+      <div class="post">
+        <table class="table table-striped table-sm table-responsive">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Fighter</th>
+              <th scope="col">Elo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row">1</th>
+              <td>Roosevelt Roberts</td>
+              <td>1030.278</td>
+
+            </tr>
+
+            <tr>
+              <th scope="row">2</th>
+              <td>Nazareno Malegarie</td>
+              <td>971.471</td>
+
+            </tr>
+
+            <tr>
+              <th scope="row">3</th>
+              <td>Nicolae Negumereanu</td>
+              <td>982.168</td>
+
+            </tr>
+
+            <tr>
+              <th scope="row">4</th>
+              <td>Zach Light</td>
+              <td>970.929</td>
+
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+
+      <p>I also built a fight predication part to the program, where you can input the fighters and their ages in Terminal, and then it outputs the expected fight percentages. I want to start logging them to see how I stack up against Vegas.</p>
+
+      <div class="text-center">
+        <img src="pictest.png" class="img-fluid post" alt="">
+      </div>
+
+      <h2>Limitations</h2>
+      <p>Here are the potential limitations:</p>
+      <ul>
+        <li>Elo models work best when the participants have played many games. UFC fighters cannot fight that much, because they usually sustain signficant damage each fight. But this seems to be an issue any UFC modeling system would run into, but it means that the Elo system takes in less data points than other UFC models. Maybe this is a good thing, as it could avoid a lot of noise, but it's hard to tell.</li>
+        <li>There might be value in taking into account first round knockouts, first round submissions, judge scoring, etc. While there could be a lot of noise with these values, it does seem to be true that a first round knockout demonstrates more dominance than a fifth round knockout. The hesitation I have is that some fighters might be trying to play the long game and knockout their opponent when they are tired, so I'm nervous that I might end up amplifying a signficant amount of noise by doing so.</li>
+        <li>The model cannot take into account factors like how much a given fighter has been training for a fight. While I think doing so would introduce too much noise, the model could end up missing circumstances where a fighter is noticeably underprepared.</li>
+        <li>There's an inherent limitation to UFC prediction, and I don't think the sport will ever reach the level of analysis that baseball has, as I don't know if it can be done.</li>
+      </ul>
+
+      <h2>Future Expansion</h2>
+      <p>Here's how I plan to upgrade the model in the future. I'm working on a lot of things right now, so my UFC Elo system is not my priority.</p>
+
+      <ul>
+        <li>Right now, the aging curve accounts for 20% of the match predictions. I want to adjust this so that it is either equivilant to the R^2 of age and win percentage or taken into account before the win percentage part. This means editing the scores based on age rather than figure out the win percentage not including age and then weighing the age win percentage with the skill win percentage. That probably doesn't make a lot of sense, but it's hard to explain.
+        </li>
+        <li>I need to find a better way to gather the data. Ultimately, I'd like to make a web-scraper that would collect the data automatically, so I don't have to update it.</li>
+        <li>I want to use Pandas rather than dictionaries to store the data. It's an easy fix.</li>
+        <li>I ultimately want it to auto-log fight odds so that I can compare myself versus Vegas and see how I do, rather than having to do that all manually.</li>
+      </ul>
+
+
+
+
+
+      <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="../projects.html">Projects</a></li>
+          <li class="breadcrumb-item active" aria-current="page">UFC Elo</li>
+        </ol>
+      </nav>
+    </div>
+
+    <footer>
+      <figure class="text-center">
+        <h6>&#169;	Landon Poon</h6>
+        <p>Website coded by me using Bootstrap.</p>
+      </figure>
+    </footer>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+    -->
+  </body>
+</html>
