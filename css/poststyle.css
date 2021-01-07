@@ -1,4 +1,4 @@
-.breadcrumb, .post p, h1, h5, h6, h3, h2, .post, img, ul, ol {
+.breadcrumb, .post p, h1, h5, h6, h3, h2, .post, img, ul, ol, iframe {
   padding-left: 23%;
   padding-right: 23%;
 }
@@ -11,6 +11,11 @@
   width: 100%;
 }
 
+.post iframe {
+  height: 375px;
+  width: 100%;
+}
+
 .caption {
   text-align: center;
 }
@@ -19,19 +24,28 @@
   margin-left: 30px;
 }
 
+
 img {
   padding: 15px;
 }
 
 
 @media screen and (max-width: 992px) {
-  .breadcrumb, .post p, h1, h5, h6, h3, h2, .post, img, ul, ol {
+  .breadcrumb, .post p, h1, h5, h6, h3, h2, .post, img, ul, ol, iframe {
     padding-left: 5%;
     padding-right: 5%;
+  }
+
+  .post iframe {
+    height: 300px;
   }
 
 }
 
 h1 {
   font-size: 50px;
+}
+
+#ViewOnGithub a {
+  text-decoration: none;
 }
